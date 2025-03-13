@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,16 +28,19 @@ public class LibroController {
         return libroService.listarLibrosDisponibles();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public Libro crearLibro(@RequestBody Libro libro) {
         return libroService.crearLibro(libro);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public void actualizarLibro(@PathVariable Long id, @RequestBody Libro datosActualizados) {
         libroService.actualizarLibro(id, datosActualizados);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public void eliminarLibro(@PathVariable Long id) {
         libroService.eliminarLibro(id);
